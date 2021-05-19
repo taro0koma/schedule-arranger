@@ -19,3 +19,6 @@ services:
       POSTGRES_DB: schedule_arranger
     volumes:
      - ../schedule-arranger-data:/var/lib/postgresql/data
+     volumes:
+      schedule-arranger-data:
+        external: true
