@@ -1,26 +1,24 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  div
-    if user
-      div
-        a(href="/logout") #{user.username} をログアウト
-      div
-        a(href="/schedules/new") 予定を作る
+  div.jumbotron.my-3
+    h1.display-4 予定調整くん！
+    div.mx-2
+      p.fw-bold #[span.lead ADJUST OUR #[span &nbsp;] #[strong SCHEDULE ..]] 
+        br
+        | 予定調整くん!は Github 認証により予定を作って出欠が取れるサービスです。
+      a(href="/schedules/new").btn.btn-info.btn-lg.btn-block.mt-5 予定を作る
+  if user 
+    div.my-5
       - var hasSchedule = schedules.length > 0
-      if hasSchedule
-        h3 あなたの作った予定一覧
-        table.table
-          tr
+      if hasSchedule 
+        h3.my-3 あなたの作成した予定
+        table.table 
+          tr 
             th 予定名
             th 更新日時
           each schedule in schedules
             tr
               td
                 a(href=`/schedules/${schedule.scheduleId}`) #{schedule.scheduleName}
-              td #{schedule.updatedAt}
-    else
-      div
-        a(href="/login") ログイン
+              td #{schedule.formattedUpdatedAt}

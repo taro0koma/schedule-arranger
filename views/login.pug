@@ -1,6 +1,6 @@
 extends layout
 
 block content
-  a(href="/auth/github") GitHubでログイン
-  if user
-     p 現在 #{user.username} でログイン中
+  h1.my-5 Githubアカウントでログインください。
+  p このサービスは現在 Githubメンバーのみ使用可能です。
+  a(href="/auth/github").btn.btn-info.btn-lg.btn-block.mt-5 GitHubでログイン

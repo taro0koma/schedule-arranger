@@ -1,23 +1,41 @@
 extends layout
 
 block content
-  h3 予定の編集
+  h1.my-5 予定の編集
+  p.lead 🛠 予定名／メモの変更 および 候補日程の追加が可能です。
+    p ※ 予定自体の削除はページ下部にて「危険な変更」により可能ですが一度削除すると復元できません。
+      br
+      | ※ すでに作成済みの候補日程の変更／削除は行えません。
+      br
+      | &nbsp;
   form(method="post", action=`/schedules/${schedule.scheduleId}?edit=1`)
-    div
-      h5 予定名
-      input(type="text" name="scheduleName" value=schedule.scheduleName)
-    div
-      h5 メモ
-      textarea(name="memo") #{schedule.memo}
-    div
-      label 既存の候補日程
-      ul
+    input(type="hidden", name="_csrf" value!=csrfToken)
+    div.form-group
+      label(for="scheduleName") #[strong 予定名]
+      input(type="text" name="scheduleName" value=schedule.scheduleName)#scheduleName.form-control
+    div.form-group
+      label(for="memo") #[strong メモ]
+      textarea(name="memo")#memo.form-control #{schedule.memo}
+    div.form-group
+      label #[strong 既存の候補日程]
+      ul.list-group
         each candidate in candidates
-          li #{candidate.candidateName}
-      p 候補日程の追加 (改行して複数入力してください)
-      textarea(name="candidates")
+          li.list-group-item #{candidate.candidateName}
+      br
+      | &nbsp;
+      label(for="candidates") #[strong 候補日程の追加] (改行して複数入力してください)
+      textarea(name="candidates")#candidates.form-control
     div
-      button(type="submit") 以上の内容で予定を編集する
-  h3 危険な変更
+      button(type="submit").btn.btn-info.btn-lg.btn-block 以上の内容で予定を編集する
+  br
+  | &nbsp;
+  h3 ⚠ 危険な変更
+  p.lead 予定は一度削除すると #[strong 復元できません] のでご注意ください。
+  p ※ 下記ボタンをクリックすると予定を削除します。
+    br
+    | ※ 削除の際の確認画面はありません。
   form(method="post", action=`/schedules/${schedule.scheduleId}?delete=1`)
-    button(type="submit") この予定を削除する
+    input(type="hidden", name="_csrf" value!=csrfToken)
+    button(type="submit").btn.btn-danger この予定を削除する
+  br
+  | &nbsp;
