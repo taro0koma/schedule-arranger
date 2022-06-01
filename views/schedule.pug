@@ -6,6 +6,10 @@ block content
       h4.my-3 💡 #{schedule.scheduleName}
     div.card-body
       p(style="white-space:pre;").my-3 #{schedule.memo}
+    div.form-group
+      label(for="shareURL") 共有用 URL: 
+      - var herokuURL = process.env.CALLBACK_URL ? process.env.CALLBACK_URL : 'http://localhost:8000/'
+      input(type="text" value=`${herokuURL}schedules/${schedule.scheduleId}/`)#shareURL.form-control
     div.card-footer
       p.my-3 作成者: #{schedule.user.username}
       - var isMine = parseInt(user.id) === schedule.user.userId
